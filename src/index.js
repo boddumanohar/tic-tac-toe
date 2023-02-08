@@ -6,23 +6,12 @@ import './index.css';
 // if . is used in css, then we have to use the className attribute HTML
 
 class Square extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            value: null,
-        };
-    }
-
-    // requirements:
-    // to know Game state
-
     render() {
       return (
         <button className="square"
-                onClick={() => {this.setState({value: "X"});}}>
+                onClick={() => {this.props.onClick() }}>
 
-          {this.state.value}
+          {this.props.value}
 
         </button>
       );
@@ -30,15 +19,19 @@ class Square extends React.Component {
   }
 
   // Board --> {Square,Square..)
-  class Board extends React.Component {
+class Board extends React.Component {
     constructor(props){
-        props.state = {
-            squares: Array(9).fill(null)
-        }
+      super(props)
+
+      this.state={
+        squares: Array(9).fill(null)
+      }
     }
 
     handleClick(i) {
-
+      const squares = this.state.squares.slice()
+      squares[i] = "X"
+      this.setState({squares: squares})
     }
 
     renderSquare(i) {
@@ -49,7 +42,7 @@ class Square extends React.Component {
     }
 
     // todo: how to pass state from child to parent
-    
+
     render() {
       const status = 'Next player: X';
 
