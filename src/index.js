@@ -6,32 +6,67 @@ import './index.css';
 // if . is used in css, then we have to use the className attribute HTML
 
 class Square extends React.Component {
-    render() {
-      return (
-        <button className="square"
-                onClick={() => {this.props.onClick() }}>
+    
+  
+        render() {
+          return (
+            <button className="square" onClick={this.props.onClick}>
 
-          {this.props.value}
+                  {this.props.value}
 
-        </button>
-      );
-    }
+            </button>
+          );
+        }
   }
 
   // Board --> {Square,Square..)
+
+
 class Board extends React.Component {
+
     constructor(props){
       super(props)
 
       this.state={
-        squares: Array(9).fill(null)
+        squares: Array(9).fill(null),
+        xIsNext: true,
+        winner: "",
       }
+    }
+
+    calculateWinner(squares) {
+      const lines=[
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [2, 4, 6]
+      ]
+      for (let i=0; i<lines.length; i++){
+        const [a, b, c] = lines[i];
+        if(squares[a] && squares[a] === squares[b] && squares[a]===squares[c]){
+          return squares[a];
+        }
+      }
+      return null;
     }
 
     handleClick(i) {
       const squares = this.state.squares.slice()
-      squares[i] = "X"
-      this.setState({squares: squares})
+      squares[i] = this.state.xIsNext ? "X" :"O" ;
+      
+      let winner = this.calculateWinner(squares); 
+  
+      this.setState({
+        squares: squares,
+        xIsNext: !this.state.xIsNext,
+        winner: winner,
+      });
+
+
     }
 
     renderSquare(i) {
@@ -44,11 +79,12 @@ class Board extends React.Component {
     // todo: how to pass state from child to parent
 
     render() {
-      const status = 'Next player: X';
+      const status = 'Next player: ' + (this.state.xIsNext ? "X" :"O");
 
       return (
         <div>
           <div className="status">{status}</div>
+          <p> Winner is {this.state.winner}</p>
           <div className="board-row">
             {this.renderSquare(0)}
             {this.renderSquare(1)}
@@ -71,21 +107,21 @@ class Board extends React.Component {
 
   class Game extends React.Component {
     render() {
-      return (
-        <div className="game">
-          <div className="game-board">
-            <Board />
-          </div>
-          <div className="game-info">
-            <div>{/* status */}</div>
-            <ol>{/* TODO */}</ol>
-          </div>
-        </div>
-      );
+                      return (
+                                <div className="game">
+                                
+                                        <div className="game-board"> <Board />  </div>
+                                        <div className="game-info">
+                                              <div>{/* status */}</div>
+                                              <ol>{/* TODO */}</ol>
+                                        </div>
+                                </div>
+                      );
     }
   }
 
   // ========================================
 
+  
   const root = ReactDOM.createRoot(document.getElementById("root"));
   root.render(<Game />);
