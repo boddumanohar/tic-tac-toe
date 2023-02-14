@@ -9,6 +9,8 @@ class Square extends React.Component {
     
   
         render() {
+      console.log("reloading square")
+
           var customClassName=""
           if (this.props.value==="X") {
            customClassName="redsquare"
@@ -22,10 +24,7 @@ class Square extends React.Component {
             </button>
           );
         }
-  }
-
-  // Board --> {Square,Square..)
-
+}
 
 class Board extends React.Component {
 
@@ -64,41 +63,42 @@ class Board extends React.Component {
    decisionTie(squares){
     console.log(squares)
       for(let k=0; k<squares.length; k++){
-        if(this.state.squares[k]==null){
+        if(squares[k]==null){
+          console.log("returning false", k)
            return false;
         }
       }
+      console.log("returning true")
+
       return true;
     }
 
     handleClick(i) {
-      
       const squares = this.state.squares.slice()
       
-      if(this.calculateWinner(squares)||squares[i]){
+      if(this.calculateWinner(squares) || squares[i]){
         return;
       }
       
       squares[i] = this.state.xIsNext ? "X" :"O" ;
       let winner = this.calculateWinner(squares); 
-      
+      let dec = this.decisionTie(squares)
+      console.log(dec)
       this.setState({
         squares: squares,
         xIsNext: !this.state.xIsNext,
         winner:  winner,
-        isTIE:  this.decisionTie(squares)
+        isTIE:  dec,
       });
-
     }
     
-
     renderSquare(i) {
  
       return <Square
         value={this.state.squares[i]}
         
         onClick={() => {this.handleClick(i);
-          this.decisionTie(i);
+          
         } }
    
       />;
@@ -108,6 +108,7 @@ class Board extends React.Component {
     // todo: how to pass state from child to parent
 
     render() {
+      console.log("reloading board")
       let status = 'Next player: ' + (this.state.xIsNext ? "X" :"O");
       
        var winner = this.state.winner;
@@ -141,11 +142,13 @@ class Board extends React.Component {
         </div>
       );
     }
-  }
+}
 
-  class Game extends React.Component {
+class Game extends React.Component {
     render() {
-               return (
+      console.log("reloading Game")
+ 
+      return (
                         <div className="game">
                             <div className="game-board"> <Board />  </div>
                                 <div className="game-info">
@@ -156,10 +159,7 @@ class Board extends React.Component {
                           </div>
                       );
     }
-  }
+}
 
-  // ========================================
-
-  
-  const root = ReactDOM.createRoot(document.getElementById("root"));
-  root.render(<Game />);
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<Game />);
