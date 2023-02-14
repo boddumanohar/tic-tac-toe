@@ -58,7 +58,14 @@ ol, ul {
   width: 150px;
   color: blue;
 }
-
+.Reset {
+width:100px;
+height:30px;
+border-radius: 10px;
+border-style:solid;
+margin-top:90px;
+margin-right:350px;
+}
 .square:focus {
   outline: none;
 }

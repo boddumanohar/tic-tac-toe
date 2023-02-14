@@ -145,12 +145,21 @@ class Board extends React.Component {
 }
 
 class Game extends React.Component {
+    constructor(props){
+      super(props)
+
+      this.state={
+        isReset:true
+      }
+      }
+
     render() {
       console.log("reloading Game")
  
       return (
                         <div className="game">
                             <div className="game-board"> <Board />  </div>
+                            <button className="Reset" onclick ={()=>{}}>Reset</button>
                                 <div className="game-info">
                                               <div>{/* status */}</div>
                                               <ol>{/* TODO */}</ol>
