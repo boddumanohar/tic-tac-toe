@@ -9,11 +9,16 @@ class Square extends React.Component {
     
   
         render() {
+          var customClassName=""
+          if (this.props.value==="X") {
+           customClassName="redsquare"
+          }
+          else{
+            customClassName="bluesquare"
+          }
           return (
-            <button className="square" onClick={this.props.onClick}>
-
-                  {this.props.value}
-
+            <button className={customClassName}  onClick={this.props.onClick}>
+             {this.props.value}
             </button>
           );
         }
@@ -31,6 +36,7 @@ class Board extends React.Component {
         squares: Array(9).fill(null),
         xIsNext: true,
         winner: "",
+        isTIE: false
       }
     }
 
@@ -54,37 +60,69 @@ class Board extends React.Component {
       return null;
     }
 
+    
+   decisionTie(squares){
+    console.log(squares)
+      for(let k=0; k<squares.length; k++){
+        if(this.state.squares[k]==null){
+           return false;
+        }
+      }
+      return true;
+    }
+
     handleClick(i) {
-      const squares = this.state.squares.slice()
-      squares[i] = this.state.xIsNext ? "X" :"O" ;
       
+      const squares = this.state.squares.slice()
+      
+      if(this.calculateWinner(squares)||squares[i]){
+        return;
+      }
+      
+      squares[i] = this.state.xIsNext ? "X" :"O" ;
       let winner = this.calculateWinner(squares); 
-  
+      
       this.setState({
         squares: squares,
         xIsNext: !this.state.xIsNext,
-        winner: winner,
+        winner:  winner,
+        isTIE:  this.decisionTie(squares)
       });
 
-
     }
+    
 
     renderSquare(i) {
+ 
       return <Square
         value={this.state.squares[i]}
-        onClick={() => this.handleClick(i)}
+        
+        onClick={() => {this.handleClick(i);
+          this.decisionTie(i);
+        } }
+   
       />;
     }
-
+    
+   
     // todo: how to pass state from child to parent
 
     render() {
-      const status = 'Next player: ' + (this.state.xIsNext ? "X" :"O");
-
+      let status = 'Next player: ' + (this.state.xIsNext ? "X" :"O");
+      
+       var winner = this.state.winner;
+       if (winner) {
+        status = "Winner is " + this.state.winner
+       }
+       
+      if(this.state.isTIE){
+        status="TIE"
+      }
+      console.log(this.state.isTIE)
       return (
         <div>
-          <div className="status">{status}</div>
-          <p> Winner is {this.state.winner}</p>
+          <p className="status">{status}</p>
+         
           <div className="board-row">
             {this.renderSquare(0)}
             {this.renderSquare(1)}
@@ -107,15 +145,15 @@ class Board extends React.Component {
 
   class Game extends React.Component {
     render() {
-                      return (
-                                <div className="game">
-                                
-                                        <div className="game-board"> <Board />  </div>
-                                        <div className="game-info">
+               return (
+                        <div className="game">
+                            <div className="game-board"> <Board />  </div>
+                                <div className="game-info">
                                               <div>{/* status */}</div>
                                               <ol>{/* TODO */}</ol>
-                                        </div>
                                 </div>
+                                        
+                          </div>
                       );
     }
   }
