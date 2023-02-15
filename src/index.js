@@ -36,6 +36,7 @@ class Board extends React.Component {
         xIsNext: true,
         winner: "",
         isTIE: false
+        
       }
     }
 
@@ -151,15 +152,17 @@ class Game extends React.Component {
       this.state={
         isReset:true
       }
-      }
+   }
 
     render() {
       console.log("reloading Game")
  
       return (
                         <div className="game">
-                            <div className="game-board"> <Board />  </div>
-                            <button className="Reset" onclick ={()=>{}}>Reset</button>
+                            <div className="game-board">  <Board isReset={this.state.isReset} />  </div>
+                            <button className="Reset" onclick ={()=>{(this.setState({
+                              isReset: isReset
+                            }))}}>Reset</button>
                                 <div className="game-info">
                                               <div>{/* status */}</div>
                                               <ol>{/* TODO */}</ol>
