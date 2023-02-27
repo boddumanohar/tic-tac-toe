@@ -112,6 +112,11 @@ class Board extends React.Component {
       console.log("reloading board")
       let status = 'Next player: ' + (this.state.xIsNext ? "X" :"O");
       
+      if(this.props.isReset){
+        this.setState({
+          squares : Array(9).fill(null)
+        })
+      }
        var winner = this.state.winner;
        if (winner) {
         status = "Winner is " + this.state.winner
@@ -150,7 +155,7 @@ class Game extends React.Component {
       super(props)
 
       this.state={
-        isReset:true
+        isReset:false
       }
    }
 
@@ -161,7 +166,7 @@ class Game extends React.Component {
                         <div className="game">
                             <div className="game-board">  <Board isReset={this.state.isReset} />  </div>
                             <button className="Reset" onclick ={()=>{(this.setState({
-                              isReset: isReset
+                              isReset: true
                             }))}}>Reset</button>
                                 <div className="game-info">
                                               <div>{/* status */}</div>
