@@ -108,15 +108,19 @@ class Board extends React.Component {
    
     // todo: how to pass state from child to parent
 
+    resetBoard() {
+      this.setState({
+        squares: Array(9).fill(null),
+        xIsNext: true,
+          winner:  "",
+         isTIE:  false,
+      });
+    }
+    
     render() {
       console.log("reloading board")
       let status = 'Next player: ' + (this.state.xIsNext ? "X" :"O");
       
-      if(this.props.isReset){
-        this.setState({
-          squares : Array(9).fill(null)
-        })
-      }
        var winner = this.state.winner;
        if (winner) {
         status = "Winner is " + this.state.winner
@@ -135,6 +139,7 @@ class Board extends React.Component {
             {this.renderSquare(1)}
             {this.renderSquare(2)}
           </div>
+
           <div className="board-row">
             {this.renderSquare(3)}
             {this.renderSquare(4)}
@@ -145,29 +150,29 @@ class Board extends React.Component {
             {this.renderSquare(7)}
             {this.renderSquare(8)}
           </div>
+          <button className="Reset" onClick ={this.resetBoard}>Reset</button>
         </div>
+        
       );
     }
 }
 
 class Game extends React.Component {
-    constructor(props){
-      super(props)
+  //   constructor(props){
+  //     super(props)
 
-      this.state={
-        isReset:false
-      }
-   }
+  //     this.state={
+  //       isReset:false
+  //     }
+  //  }
 
     render() {
       console.log("reloading Game")
  
       return (
                         <div className="game">
-                            <div className="game-board">  <Board isReset={this.state.isReset} />  </div>
-                            <button className="Reset" onclick ={()=>{(this.setState({
-                              isReset: true
-                            }))}}>Reset</button>
+                            <div className="game-board">  <Board />  </div>
+  
                                 <div className="game-info">
                                               <div>{/* status */}</div>
                                               <ol>{/* TODO */}</ol>
