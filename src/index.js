@@ -75,6 +75,16 @@ class Board extends React.Component {
     }
 
     handleClick(i) {
+      if (i == 100) {
+        console.log("reseting.. bybyby")
+        this.setState({
+          squares: Array(9).fill(null),
+          xIsNext: true,
+          winner:  "manu",
+          isTIE:  false,
+        });
+        return
+      }
       const squares = this.state.squares.slice()
       
       if(this.calculateWinner(squares) || squares[i]){
@@ -109,11 +119,13 @@ class Board extends React.Component {
     // todo: how to pass state from child to parent
 
     resetBoard() {
+      console.log("resetting...")
+      const squares = this.state.squares.slice()
       this.setState({
         squares: Array(9).fill(null),
         xIsNext: true,
-          winner:  "",
-         isTIE:  false,
+        winner:  "manu",
+        isTIE:  false,
       });
     }
     
@@ -150,7 +162,7 @@ class Board extends React.Component {
             {this.renderSquare(7)}
             {this.renderSquare(8)}
           </div>
-          <button className="Reset" onClick ={this.resetBoard}>Reset</button>
+          <button className="Reset" onClick ={() => {this.handleClick(100)}}>Reset</button>
         </div>
         
       );
