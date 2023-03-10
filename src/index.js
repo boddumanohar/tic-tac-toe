@@ -80,7 +80,7 @@ class Board extends React.Component {
         this.setState({
           squares: Array(9).fill(null),
           xIsNext: true,
-          winner:  "manu",
+          winner:  "",
           isTIE:  false,
         });
         return
@@ -144,7 +144,11 @@ class Board extends React.Component {
       console.log(this.state.isTIE)
       return (
         <div>
-          <p className="status">{status}</p>
+          <div className="row-wise">  
+            <p className="status">{status}</p>
+            <button className="Reset" onClick ={() => {this.handleClick(100)}}>Reset</button>
+          </div>
+          
          
           <div className="board-row">
             {this.renderSquare(0)}
@@ -162,7 +166,6 @@ class Board extends React.Component {
             {this.renderSquare(7)}
             {this.renderSquare(8)}
           </div>
-          <button className="Reset" onClick ={() => {this.handleClick(100)}}>Reset</button>
         </div>
         
       );
@@ -184,7 +187,7 @@ class Game extends React.Component {
       return (
                         <div className="game">
                             <div className="game-board">  <Board />  </div>
-  
+                            
                                 <div className="game-info">
                                               <div>{/* status */}</div>
                                               <ol>{/* TODO */}</ol>
