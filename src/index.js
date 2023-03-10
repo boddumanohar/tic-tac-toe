@@ -75,7 +75,7 @@ class Board extends React.Component {
     }
 
     handleClick(i) {
-      if (i == 100) {
+      if (i === 100) {
         console.log("reseting.. bybyby")
         this.setState({
           squares: Array(9).fill(null),
@@ -120,7 +120,6 @@ class Board extends React.Component {
 
     resetBoard() {
       console.log("resetting...")
-      const squares = this.state.squares.slice()
       this.setState({
         squares: Array(9).fill(null),
         xIsNext: true,
