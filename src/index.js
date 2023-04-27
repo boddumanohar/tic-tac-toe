@@ -1,22 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
+import Timer from './timer.js';
 
 // if # is used in css, then we have to use the id attribute in HTML
 // if . is used in css, then we have to use the className attribute HTML
 
 class Square extends React.Component {
-    
+     
   
         render() {
-      console.log("reloading square")
+          console.log("reloading square")
 
-          var customClassName=""
+          var customClassName= "";
           if (this.props.value==="X") {
-           customClassName="redsquare"
+              customClassName="redsquare"
           }
           else{
-            customClassName="bluesquare"
+              customClassName="bluesquare"
           }
           return (
             <button className={customClassName}  onClick={this.props.onClick}>
@@ -35,7 +36,7 @@ class Board extends React.Component {
         squares: Array(9).fill(null),
         xIsNext: true,
         winner: "",
-        isTIE: false
+        isTIE: false,
         
       }
     }
@@ -50,10 +51,11 @@ class Board extends React.Component {
         [2, 5, 8],
         [0, 4, 8],
         [2, 4, 6]
-      ]
+      ]      
+
       for (let i=0; i<lines.length; i++){
         const [a, b, c] = lines[i];
-        if(squares[a] && squares[a] === squares[b] && squares[a]===squares[c]){
+        if(squares[a] && squares[a] === squares[b] && squares[a] === squares[c]){
           return squares[a];
         }
       }
@@ -75,6 +77,8 @@ class Board extends React.Component {
     }
 
     handleClick(i) {
+
+
       if (i === 100) {
         console.log("reseting.. bybyby")
         this.setState({
@@ -146,6 +150,7 @@ class Board extends React.Component {
           <div className="row-wise">  
             <p className="status">{status}</p>
             <button className="Reset" onClick ={() => {this.handleClick(100)}}>Reset</button>
+            <Timer/>
           </div>
           
          
@@ -160,11 +165,13 @@ class Board extends React.Component {
             {this.renderSquare(4)}
             {this.renderSquare(5)}
           </div>
+           
           <div className="board-row">
             {this.renderSquare(6)}
             {this.renderSquare(7)}
             {this.renderSquare(8)}
           </div>
+          
         </div>
         
       );
