@@ -68,3 +68,9 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+### TODO:
+
+issue 1: When X is the winner, but if it happens it the last, it is shown as TIE. Even though X is the winner.
+issue 2: Timer didn't stop after game is complete
+issue 3: Timer didn't restart after "RESET" botton is clicked.
